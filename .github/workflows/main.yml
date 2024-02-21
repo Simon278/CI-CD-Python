@@ -1,0 +1,25 @@
+name: CI-CD-Demo
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.9
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.9
+    - name: Install dependencies
+      run: pip install main
+    - name: Run tests
+      run: python -m unittest test_main.py
+    - name: Deploy to production
+      if: github.ref == 'refs/heads/main'
+      run: |
+        # Deployment script goes here
+        echo "Deploying to production..."
+        echo "Done."
